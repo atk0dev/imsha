@@ -12,11 +12,8 @@ const User = require("./models/User");
 const Post = require("./models/Post");
 
 mongoose
-  .connect(
-    process.env.MONGO_URI,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("DB connected"))
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
+  .then(() => console.log("DB connected to ", process.env.MONGO_URI))
   .catch(err => console.error(err));
 
 const server = new ApolloServer({
