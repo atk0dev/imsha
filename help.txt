@@ -1,0 +1,28 @@
+Create new user:
+mutation {
+  signupUser(username: "Bob", email: "bob@email.com", password: "pass") {
+    username
+    email
+    password
+    joinDate
+    avatar
+  }
+}
+
+Create new post:
+mutation {
+  addPost(
+    title: "A Title"
+    imageUrl: "google.com"
+    categories: ["Art"]
+    description: "The rescription"
+    creatorId: "5dd170245824620caaba0039"
+  ) {
+    title
+    imageUrl
+    categories
+    description
+    createdDate
+    likes
+  }
+}
