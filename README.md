@@ -1,1 +1,3 @@
 imsha
+
+npm run server
