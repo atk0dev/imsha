@@ -26,3 +26,24 @@ mutation {
     likes
   }
 }
+
+
+Get all posts:
+{
+  getPosts {
+    title
+    imageUrl
+    categories
+    description
+    createdDate
+    likes
+    createdBy {
+      _id
+      username
+      email
+      password
+      avatar
+      joinDate
+    }
+  }
+}
