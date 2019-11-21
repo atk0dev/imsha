@@ -1,13 +1,17 @@
 Create new user:
 mutation {
-  signupUser(username: "Bob", email: "bob@email.com", password: "pass") {
-    username
-    email
-    password
-    joinDate
-    avatar
+  signupUser(username: "Doug", email: "doug@email.com", password: "doug") {
+    token
   }
 }
+
+Login:
+mutation {
+  signinUser(username: "Doug", password: "doug") {
+    token
+  }
+}
+
 
 Create new post:
 mutation {
