@@ -16,10 +16,7 @@ const Post = require("./models/Post");
 
 // Connect to MLab Database
 mongoose
-  .connect(
-    process.env.MONGO_URI,
-    { useNewUrlParser: true }
-  )
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
   .then(() => console.log("DB connected"))
   .catch(err => console.error(err));
 
@@ -50,6 +47,6 @@ const server = new ApolloServer({
   }
 });
 
-server.listen().then(({ url }) => {
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
   console.log(`Server listening on ${url}`);
 });

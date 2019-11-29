@@ -216,6 +216,16 @@ export default {
 </script>
 
 <style>
+h1 {
+  font-weight: 400;
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 2rem;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition-property: opacity;
@@ -261,7 +271,7 @@ export default {
     transform: translate3d(0, -10px, 0);
   }
   90% {
-    transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -5px, 0);
   }
 }
 </style>
