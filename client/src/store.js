@@ -14,7 +14,8 @@ import {
   UPDATE_USER_POST,
   DELETE_USER_POST,
   SIGNIN_USER,
-  SIGNUP_USER
+  SIGNUP_USER,
+  UPDATE_USER_PROFILE
 } from "./queries";
 
 Vue.use(Vuex);
@@ -249,6 +250,19 @@ export default new Vuex.Store({
       await apolloClient.resetStore();
       // redirect home - kick users out of private pages (i.e. profile)
       router.push("/");
+    },
+    updateUserProfile: ({ state, commit }, payload) => {
+      apolloClient
+        .mutate({
+          mutation: UPDATE_USER_PROFILE,
+          variables: payload
+        })
+        .then(({ data }) => {
+          debugger;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   },
   getters: {

@@ -6,6 +6,7 @@ type User {
   avatar: String
   joinDate: String
   favorites: [Post]
+  instagram: String
 }
 
 type Post {
@@ -73,4 +74,9 @@ type Mutation {
   unlikePost(postId: ID!, username: String!): LikesFaves!
   signinUser(username: String!, password: String!): Token
   signupUser(username: String!, email: String!, password: String!): Token
+  updateUserProfile(
+    userId: ID!
+    username: String!
+    instagram: String
+  ): User!
 }

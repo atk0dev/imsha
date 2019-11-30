@@ -113,7 +113,11 @@ export default {
       messageRules: [
         message => !!message || "Message is required",
         message =>
-          message.length < 75 || "Message must be less than 75 characters"
+        {
+          if (message) {
+            message.length < 75 || "Message must be less than 75 characters"
+          }          
+        }
       ]
     };
   },

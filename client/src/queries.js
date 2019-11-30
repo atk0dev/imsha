@@ -231,3 +231,23 @@ export const SIGNUP_USER = gql`
     }
   }
 `;
+
+export const UPDATE_USER_PROFILE = gql`
+  mutation(
+    $userId: ID!
+    $username: String!
+    $instagram: String
+  ) {
+    updateUserProfile(
+      userId: $userId
+      username: $username
+      instagram: $instagram
+    ) {
+      _id
+      username
+      instagram
+      avatar
+    }
+  }
+`;
+

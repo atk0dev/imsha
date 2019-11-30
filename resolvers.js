@@ -196,6 +196,18 @@ module.exports = {
         password
       }).save();
       return { token: createToken(newUser, process.env.SECRET, "1hr") };
-    }
+    },
+    updateUserProfile: async (
+      _,
+      { userId, username, instagram },
+      { User }
+    ) => {
+      const user = await User.findOneAndUpdate(
+        { _id: userId },
+        { $set: { username, instagram } },
+        { new: true }
+      );
+      return user;
+    },
   }
 };

@@ -1,5 +1,5 @@
 {
-  "name": "fullstack-vue-graphql-starter",
+  "name": "image-sharing-app",
   "version": "1.0.0",
   "description": "Starter for Full-Stack Vue-GraphQL-Apollo Projects",
   "main": "server.js",
@@ -9,10 +9,10 @@
     "dev": "concurrently --names \"server,client\" \"npm run server --silent\" \"npm run client --silent\""
   },
   "keywords": [],
-  "author": "Reed Barger",
+  "author": "Andrii Tkach",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.0.0-rc.7",
+    "apollo-server": "^2.0.0",
     "bcrypt": "^3.0.0",
     "dotenv": "^6.0.0",
     "graphql": "^0.13.2",

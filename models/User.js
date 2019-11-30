@@ -30,6 +30,10 @@ const UserSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     required: true,
     ref: "Post"
+  },
+  instagram: {
+    type: String,
+    trim: true
   }
 });
 

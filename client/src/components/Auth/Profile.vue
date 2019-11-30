@@ -4,6 +4,9 @@
     <!-- User Details Card -->
     <v-flex sm6 offset-sm3>
       <v-card class="white--text" color="secondary">
+        <v-btn @click="loadProfile(user)" color="info" floating fab small dark>
+          <v-icon>edit</v-icon>
+        </v-btn>
         <v-layout>
           <v-flex xs5>
             <v-card-media height="125px" contain :src="user.avatar"></v-card-media>
@@ -134,6 +137,47 @@
       </v-card>
     </v-dialog>
 
+    <!-- Edit Profile Dialog -->
+    <v-dialog xs12 sm6 offset-sm3 persistent v-model="editProfileDialog">
+      <v-card>
+        <v-card-title class="headline grey lighten-2">Update Profile</v-card-title>
+        <v-container>
+          <v-form v-model="isProfileFormValid" lazy-validation ref="form" @submit.prevent="handleUpdateUserProfile">
+
+            <!-- Name Input -->
+            <v-layout row>
+              <v-flex xs12>
+                <v-text-field :rules="userNameRules" v-model="userName" label="User Name" type="text" required></v-text-field>
+              </v-flex>
+            </v-layout>
+
+            <!-- Instagram Input -->
+            <v-layout row>
+              <v-flex xs12>
+                <v-text-field v-model="userInstagram" label="Instagram" type="text"></v-text-field>
+              </v-flex>
+            </v-layout>
+
+            <!-- Image Preview -->
+            <v-layout row>
+              <v-flex xs12>
+                <img :src="user.avatar" height="300px">
+              </v-flex>
+            </v-layout>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn :disabled="!isProfileFormValid" type="submit" class="success--text" flat>Update</v-btn>
+              <v-btn class="error--text" flat @click="editProfileDialog = false">Cancel</v-btn>
+            </v-card-actions>
+
+          </v-form>
+        </v-container>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -164,7 +208,15 @@ export default {
         desc => !!desc || "Description is required",
         desc =>
           desc.length < 200 || "Description must have less than 200 characters"
-      ]
+      ],
+      editProfileDialog: false,
+      userName: "",
+      userInstagram: "",
+      isProfileFormValid: true,
+      userNameRules: [
+        userName => !!userName || "User Name required",
+        userName => userName.length < 10 || "User Name must have less than 10 characters"
+      ],      
     };
   },
   computed: {
@@ -219,7 +271,22 @@ export default {
       this.imageUrl = imageUrl;
       this.categories = categories;
       this.description = description;
-    }
+    },
+    loadProfile({ _id, username, instagram }, editProfileDialog = true) {
+      this.editProfileDialog = editProfileDialog;
+      this.userName = username;
+      this.userInstagram = instagram;
+    },
+    handleUpdateUserProfile() {
+      if (this.$refs.form.validate()) {
+        this.$store.dispatch("updateUserProfile", {
+          userId: this.user._id,
+          username: this.userName,
+          instagram: this.userInstagram
+        });
+        this.editProfileDialog = false;
+      }
+    },
   }
 };
 </script>
