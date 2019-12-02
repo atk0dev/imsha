@@ -226,8 +226,8 @@ export const SIGNIN_USER = gql`
 `;
 
 export const SIGNUP_USER = gql`
-  mutation($username: String!, $email: String!, $password: String!) {
-    signupUser(username: $username, email: $email, password: $password) {
+  mutation($username: String!, $email: String!, $password: String!, $instagram: String) {
+    signupUser(username: $username, email: $email, password: $password, instagram: $instagram) {
       token
     }
   }
@@ -238,11 +238,13 @@ export const UPDATE_USER_PROFILE = gql`
     $userId: ID!
     $username: String!
     $instagram: String
+    $avatar: String
   ) {
     updateUserProfile(
       userId: $userId
       username: $username
-      instagram: $instagram
+      instagram: $instagram,
+      avatar: $avatar
     ) {
       _id
       username

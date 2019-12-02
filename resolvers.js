@@ -185,7 +185,7 @@ module.exports = {
       }
       return { token: createToken(user, process.env.SECRET, "1hr") };
     },
-    signupUser: async (_, { username, email, password }, { User }) => {
+    signupUser: async (_, { username, email, password, instagram }, { User }) => {
       const user = await User.findOne({ username });
       if (user) {
         throw new Error("User already exists");
@@ -193,18 +193,19 @@ module.exports = {
       const newUser = await new User({
         username,
         email,
-        password
+        password,
+        instagram
       }).save();
       return { token: createToken(newUser, process.env.SECRET, "1hr") };
     },
     updateUserProfile: async (
       _,
-      { userId, username, instagram },
+      { userId, username, instagram, avatar },
       { User }
     ) => {
       const user = await User.findOneAndUpdate(
         { _id: userId },
-        { $set: { username, instagram } },
+        { $set: { username, instagram, avatar } },
         { new: true }
       );
       return user;

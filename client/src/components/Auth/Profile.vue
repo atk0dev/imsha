@@ -162,7 +162,9 @@
             <!-- Image Preview -->
             <v-layout row>
               <v-flex xs12>
-                <img :src="user.avatar" height="300px">
+                <v-card height="300px">
+                  <img :src="userAvatar" height="300px">
+                </v-card>
               </v-flex>
             </v-layout>
 
@@ -185,6 +187,7 @@
 <script>
 import moment from "moment";
 import { mapGetters } from "vuex";
+import * as instagram from "user-instagram";
 
 export default {
   name: "Profile",
@@ -212,7 +215,9 @@ export default {
       ],
       editProfileDialog: false,
       userName: "",
+      avatar: "",
       userInstagram: "",
+      userAvatar: "",
       isProfileFormValid: true,
       userNameRules: [
         userName => !!userName || "User Name required",
@@ -225,6 +230,19 @@ export default {
   },
   created() {
     this.handleGetUserPosts();
+  },
+  watch: {
+    userInstagram(newValue, oldValue) {
+      if (newValue) {
+        instagram(`https://www.instagram.com/${newValue}`)
+          .then(data => {
+            this.userAvatar = data.avatar;
+        })
+        .catch(e => {
+          this.userAvatar = "";
+        })
+      }
+    }
   },
   methods: {
     goToPost(id) {
@@ -273,17 +291,19 @@ export default {
       this.categories = categories;
       this.description = description;
     },
-    loadProfile({ _id, username, instagram }, editProfileDialog = true) {
+    loadProfile({ _id, username, instagram, avatar }, editProfileDialog = true) {
       this.editProfileDialog = editProfileDialog;
       this.userName = username;
       this.userInstagram = instagram;
+      this.userAvatar = avatar;
     },
     handleUpdateUserProfile() {
       if (this.$refs.form.validate()) {
         this.$store.dispatch("updateUserProfile", {
           userId: this.user._id,
           username: this.userName,
-          instagram: this.userInstagram
+          instagram: this.userInstagram,
+          avatar: this.userAvatar
         });
         this.editProfileDialog = false;
       }

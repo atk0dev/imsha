@@ -30,6 +30,12 @@
 
               <v-layout row>
                 <v-flex xs12>
+                  <v-text-field v-model="instagram" prepend-icon="instagram" label="Instagram" type="text" required></v-text-field>
+                </v-flex>
+              </v-layout>
+
+              <v-layout row>
+                <v-flex xs12>
                   <v-text-field :rules="emailRules" v-model="email" prepend-icon="email" label="Email" type="email" required></v-text-field>
                 </v-flex>
               </v-layout>
@@ -80,6 +86,7 @@ export default {
       email: "",
       password: "",
       passwordConfirmation: "",
+      instagram: "",
       usernameRules: [
         username => !!username || "Username is required",
         username =>
@@ -114,7 +121,8 @@ export default {
         this.$store.dispatch("signupUser", {
           username: this.username,
           email: this.email,
-          password: this.password
+          password: this.password,
+          instagram: this.instagram
         });
       }
     }

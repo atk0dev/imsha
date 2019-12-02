@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const md5 = require("md5");
 const bcrypt = require("bcrypt");
+const instagram = require("user-instagram")
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -37,15 +38,22 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
+
 // Create and add avatar to user
 UserSchema.pre("save", function(next) {
-  if (instagram) {
-    next();
+  if (this.instagram) {
+    instagram(`https://www.instagram.com/${this.instagram}`)
+      .then(data => {
+        this.avatar = data.avatar;
+        next();
+    })
+    .catch(e => {
+      next();
+    })    
   } else {
     this.avatar = `http://gravatar.com/avatar/${md5(this.username)}?d=identicon`;
     next();
-  }
-  
+  }  
 });
 
 // Hash password so it can't be seen w/ access to database
