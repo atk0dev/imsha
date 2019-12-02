@@ -39,8 +39,13 @@ const UserSchema = new mongoose.Schema({
 
 // Create and add avatar to user
 UserSchema.pre("save", function(next) {
-  this.avatar = `http://gravatar.com/avatar/${md5(this.username)}?d=identicon`;
-  next();
+  if (instagram) {
+    next();
+  } else {
+    this.avatar = `http://gravatar.com/avatar/${md5(this.username)}?d=identicon`;
+    next();
+  }
+  
 });
 
 // Hash password so it can't be seen w/ access to database

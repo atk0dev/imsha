@@ -15,6 +15,7 @@
             <v-card-title primary-title>
               <div>
                 <div class="headline">{{user.username}}</div>
+                <div>Instagram: {{user.instagram}}</div>
                 <div>Joined {{formatJoinDate(user.joinDate)}}</div>
                 <div class="hidden-xs-only font-weight-thin">{{user.favorites.length}} Favorites</div>
                 <div class="hidden-xs-only font-weight-thin">{{userPosts.length}} Posts Added</div>

@@ -54,9 +54,10 @@ export const GET_CURRENT_USER = gql`
       _id
       username
       email
-      password
+      # password
       avatar
       joinDate
+      instagram
       favorites {
         _id
         title
@@ -245,8 +246,16 @@ export const UPDATE_USER_PROFILE = gql`
     ) {
       _id
       username
-      instagram
+      email
+      # password
       avatar
+      instagram
+      joinDate
+      favorites {
+        _id
+        title
+        imageUrl
+      }
     }
   }
 `;

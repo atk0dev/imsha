@@ -258,7 +258,7 @@ export default new Vuex.Store({
           variables: payload
         })
         .then(({ data }) => {
-          debugger;
+          commit("setUser", data.updateUserProfile);
         })
         .catch(err => {
           console.error(err);
