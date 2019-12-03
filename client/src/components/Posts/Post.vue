@@ -17,13 +17,13 @@
 
           <v-tooltip right>
             <span>Click to enlarge image</span>
-            <v-card-media @click="toggleImageDialog" slot="activator" :src="getPost.imageUrl" id="post__image"></v-card-media>
+            <v-img @click="toggleImageDialog" slot="activator" :src="getPost.imageUrl" id="post__image"></v-img>
           </v-tooltip>
 
           <!-- Post Image Dialog -->
           <v-dialog v-model="dialog">
             <v-card>
-              <v-card-media :src="getPost.imageUrl" height="80vh"></v-card-media>
+              <v-img :src="getPost.imageUrl" height="80vh"></v-img>
             </v-card>
           </v-dialog>
 
@@ -187,7 +187,7 @@ export default {
           };
           this.$store.commit("setUser", updatedUser);
         })
-        .catch(err => console.error(err));
+        //.catch(err => console.error(err));
     },
     handleUnlikePost() {
       const variables = {
@@ -218,7 +218,7 @@ export default {
           };
           this.$store.commit("setUser", updatedUser);
         })
-        .catch(err => console.error(err));
+        //.catch(err => console.error(err));
     },
     handleAddPostMessage() {
       if (this.$refs.form.validate()) {
@@ -246,9 +246,9 @@ export default {
           })
           .then(({ data }) => {
             this.$refs.form.reset();
-            console.log(data.addPostMessage);
+            //console.log(data.addPostMessage);
           })
-          .catch(err => console.error(err));
+          //.catch(err => console.error(err));
       }
     },
     goToPreviousPage() {

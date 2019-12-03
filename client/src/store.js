@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "./router";
-
+import * as instagram from "user-instagram";
 import { defaultClient as apolloClient } from "./main";
 
 import {
@@ -56,7 +56,10 @@ export default new Vuex.Store({
     },
     clearUser: state => (state.user = null),
     clearSearchResults: state => (state.searchResults = []),
-    clearError: state => (state.error = null)
+    clearError: state => (state.error = null),
+    setInstagramPosts: (state, payload) => {
+      state.instagramPosts = payload;
+    },
   },
   actions: {
     getCurrentUser: ({ commit }) => {
@@ -69,11 +72,9 @@ export default new Vuex.Store({
           commit("setLoading", false);
           // Add user data to state
           commit("setUser", data.getCurrentUser);
-          console.log(data.getCurrentUser);
         })
         .catch(err => {
           commit("setLoading", false);
-          console.error(err);
         });
     },
     getPosts: ({ commit }) => {
@@ -101,9 +102,9 @@ export default new Vuex.Store({
           commit("setUserPosts", data.getUserPosts);
           // console.log(data.getUserPosts);
         })
-        .catch(err => {
-          console.error(err);
-        });
+        // .catch(err => {
+        //   console.error(err);
+        // });
     },
     searchPosts: ({ commit }, payload) => {
       apolloClient
@@ -114,7 +115,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit("setSearchResults", data.searchPosts);
         })
-        .catch(err => console.error(err));
+        //.catch(err => console.error(err));
     },
     addPost: ({ commit }, payload) => {
       apolloClient
@@ -127,7 +128,6 @@ export default new Vuex.Store({
             // Create updated data
             data.getPosts.unshift(addPost);
             // Write updated data back to query
-            console.log(data);
             cache.writeQuery({
               query: GET_POSTS,
               data
@@ -154,10 +154,10 @@ export default new Vuex.Store({
           ]
         })
         .then(({ data }) => {
-          console.log(data.addPost);
+          //console.log(data.addPost);
         })
         .catch(err => {
-          console.error(err);
+          //console.error(err);
         });
     },
     updateUserPost: ({ state, commit }, payload) => {
@@ -177,9 +177,9 @@ export default new Vuex.Store({
           ];
           commit("setUserPosts", userPosts);
         })
-        .catch(err => {
-          console.error(err);
-        });
+        // .catch(err => {
+        //   console.error(err);
+        // });
     },
     deleteUserPost: ({ state, commit }, payload) => {
       apolloClient
@@ -197,9 +197,19 @@ export default new Vuex.Store({
           ];
           commit("setUserPosts", userPosts);
         })
-        .catch(err => {
-          console.error(err);
-        });
+        // .catch(err => {
+        //   console.error(err);
+        // });
+    },
+    getInstagramPosts: ({ commit }, payload) => {
+      if (!payload || !payload.instagram) return;
+      instagram(`https://www.instagram.com/${payload.instagram}`)
+          .then(data => {
+            commit("setInstagramPosts", data.posts);
+        })
+        // .catch(err => {          
+        //   console.error(err);
+        // });      
     },
     signinUser: ({ commit }, payload) => {
       commit("clearError");
@@ -218,7 +228,6 @@ export default new Vuex.Store({
         .catch(err => {
           commit("setLoading", false);
           commit("setError", err);
-          console.error(err);
         });
     },
     signupUser: ({ commit }, payload) => {
@@ -238,7 +247,6 @@ export default new Vuex.Store({
         .catch(err => {
           commit("setLoading", false);
           commit("setError", err);
-          console.error(err);
         });
     },
     signoutUser: async ({ commit }) => {
@@ -258,11 +266,10 @@ export default new Vuex.Store({
           variables: payload
         })
         .then(({ data }) => {
-          commit("setUser", data.updateUserProfile);
+          //commit("setUser", data.updateUserProfile);
         })
-        .catch(err => {
-          console.error(err);
-        });
+        // .catch(err => {
+        // });
     }
   },
   getters: {
@@ -273,6 +280,7 @@ export default new Vuex.Store({
     userFavorites: state => state.user && state.user.favorites,
     loading: state => state.loading,
     error: state => state.error,
-    authError: state => state.authError
+    authError: state => state.authError,
+    instagramPosts: state => state.instagramPosts
   }
 });

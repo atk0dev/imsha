@@ -9,7 +9,7 @@
         </v-btn>
         <v-layout>
           <v-flex xs5>
-            <v-card-media height="125px" contain :src="user.avatar"></v-card-media>
+            <v-img height="125px" contain :src="user.avatar"></v-img>
           </v-flex>
           <v-flex xs7>
             <v-card-title primary-title>
@@ -44,7 +44,7 @@
       <v-layout row wrap>
         <v-flex xs12 sm6 v-for="favorite in userFavorites" :key="favorite._id">
           <v-card class="mt-3 ml-1 mr-2" hover>
-            <v-card-media @click="goToPost(favorite._id)" height="30vh" :src="favorite.imageUrl"></v-card-media>
+            <v-img @click="goToPost(favorite._id)" height="30vh" :src="favorite.imageUrl"></v-img>
             <v-card-text>{{favorite.title}}</v-card-text>
           </v-card>
         </v-flex>
@@ -76,7 +76,7 @@
               <v-icon>delete</v-icon>
             </v-btn>
 
-            <v-card-media @click="goToPost(post._id)" height="30vh" :src="post.imageUrl"></v-card-media>
+            <v-img @click="goToPost(post._id)" height="30vh" :src="post.imageUrl"></v-img>
             <v-card-text>{{post.title}}</v-card-text>
           </v-card>
         </v-flex>
@@ -162,8 +162,8 @@
             <!-- Image Preview -->
             <v-layout row>
               <v-flex xs12>
-                <v-card height="300px">
-                  <img :src="userAvatar" height="300px">
+                <v-card height="100px">
+                  <img :src="userAvatar" height="100px">
                 </v-card>
               </v-flex>
             </v-layout>
@@ -291,7 +291,7 @@ export default {
       this.categories = categories;
       this.description = description;
     },
-    loadProfile({ _id, username, instagram, avatar }, editProfileDialog = true) {
+    loadProfile({ username, instagram, avatar }, editProfileDialog = true) {
       this.editProfileDialog = editProfileDialog;
       this.userName = username;
       this.userInstagram = instagram;
@@ -306,8 +306,9 @@ export default {
           avatar: this.userAvatar
         });
         this.editProfileDialog = false;
-      }
-    },
+        this.$store.dispatch("getCurrentUser");
+      }      
+    }
   }
 };
 </script>

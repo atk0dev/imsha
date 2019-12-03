@@ -5,7 +5,7 @@
     <v-layout row wrap v-if="infiniteScrollPosts">
       <v-flex xs12 sm6 v-for="post in infiniteScrollPosts.posts" :key="post._id">
         <v-card hover>
-          <v-card-media @click.native="goToPost(post._id)" :src="post.imageUrl" height="30vh" lazy></v-card-media>
+          <v-img @click.native="goToPost(post._id)" :src="post.imageUrl" height="30vh" lazy></v-img>
 
           <v-card-actions>
             <v-card-title primary>
@@ -104,8 +104,8 @@ export default {
           pageSize
         },
         updateQuery: (prevResult, { fetchMoreResult }) => {
-          console.log("previous result", prevResult.infiniteScrollPosts.posts);
-          console.log("fetch more result", fetchMoreResult);
+          // console.log("previous result", prevResult.infiniteScrollPosts.posts);
+          // console.log("fetch more result", fetchMoreResult);
 
           const newPosts = fetchMoreResult.infiniteScrollPosts.posts;
           const hasMore = fetchMoreResult.infiniteScrollPosts.hasMore;

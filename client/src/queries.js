@@ -252,12 +252,7 @@ export const UPDATE_USER_PROFILE = gql`
       # password
       avatar
       instagram
-      joinDate
-      favorites {
-        _id
-        title
-        imageUrl
-      }
+      joinDate      
     }
   }
 `;
